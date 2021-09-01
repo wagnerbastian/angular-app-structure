@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ControlItem } from '@app/models/frontend';
-import { regex, regexErrors } from '@app/shared/utils';
+import { regex, regexErrors, markFormGroupTouched } from '@app/shared/utils';
 @Component({
   selector: 'app-shared',
   templateUrl: './shared.component.html',
@@ -49,6 +49,11 @@ export class SharedComponent implements OnInit {
           Validators.required
         ]
       }],
+      autocomplete: [null, {
+        updateOn: 'change', validators: [
+          Validators.required
+        ]
+      }],
       checkboxes: [null, {
         updateOn: 'change', validators: [
           Validators.required
@@ -73,6 +78,7 @@ export class SharedComponent implements OnInit {
   }
 
   onSubmit(): void {
+    markFormGroupTouched(this.form);
     console.log('Submit!');
   }
 
@@ -82,5 +88,13 @@ export class SharedComponent implements OnInit {
 
   onToggleInline() {
     this.isInline = !this.isInline;
+  }
+
+  onToggleDisable() {
+    if (this.form.enabled) {
+      this.form.disable();
+    } else {
+      this.form.enable();
+    }
   }
 }

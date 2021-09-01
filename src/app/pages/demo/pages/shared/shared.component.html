@@ -2,8 +2,10 @@
 
 <form [formGroup]="form" novalidate autocomplete="off" (ngSubmit)="onSubmit()">
 
+    <app-button type="submit">Submit</app-button>
     <app-button (click)="onPatchValue()">Patch Value</app-button>
     <app-button (click)="onToggleInline()">Toggle Inline</app-button>
+    <app-button (click)="onToggleDisable()">Toggle Disable</app-button>
     <br> <br> <br>
 
     <app-form-field label="Input" [required]="true" [control]="form.controls.input" [isInline]="isInline" [patternError]="regexErrors.email">
@@ -16,6 +18,10 @@
 
     <app-form-field label="Select" [required]="true" [control]="form.controls.select" [isInline]="isInline">
         <app-select formControlName="select" [items]="items"></app-select>
+    </app-form-field>
+
+    <app-form-field label="autocomplete" [required]="true" [control]="form.controls.autocomplete" [isInline]="isInline">
+        <app-autocomplete formControlName="autocomplete" [items]="items"></app-autocomplete>
     </app-form-field>
 
     <app-form-field label="Checkboxes" [required]="true" [control]="form.controls.checkboxes" [isInline]="isInline">
