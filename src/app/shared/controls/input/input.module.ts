@@ -1,16 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ButtonComponent } from './button.component';
+import { InputComponent } from './input.component';
 
 
 
 @NgModule({
   declarations: [
-    ButtonComponent
+    InputComponent
   ],
   imports: [
     CommonModule
   ],
-  exports: [ButtonComponent]
+  exports: [
+    InputComponent
+  ]
 })
-export class ButtonModule { }
+export class InputModule { }
