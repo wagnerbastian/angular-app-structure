@@ -55,7 +55,9 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "buildOptimizer": true,
+              "optimization": true
             },
             "dev": {
               "budgets": [
@@ -77,24 +79,18 @@
                 }
               ],
               "outputHashing": "all",
-              "sourceMap": true
-            },
-            "development": {
-              "buildOptimizer": false,
-              "optimization": false,
-              "vendorChunk": true,
-              "extractLicenses": false,
               "sourceMap": true,
-              "namedChunks": true
+              "buildOptimizer": false,
+              "optimization": false
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "dev"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "prod": {
-              "browserTarget": "app-architecture:build:production"
+              "browserTarget": "app-architecture:build:prod"
             },
             "dev": {
               "browserTarget": "app-architecture:build:dev"
