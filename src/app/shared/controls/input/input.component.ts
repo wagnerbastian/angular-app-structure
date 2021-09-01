@@ -15,7 +15,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 export class InputComponent implements OnInit, ControlValueAccessor {
 
-  @Input() placeholder: string = '';
+  @Input() placeholder: string;
   @Output() changed = new EventEmitter<string>();
 
   value!: string;

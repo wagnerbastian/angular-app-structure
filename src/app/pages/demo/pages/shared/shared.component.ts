@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ControlItem } from '@app/models/frontend';
+import { NotificationService } from '@app/services';
 import { regex, regexErrors, markFormGroupTouched } from '@app/shared/utils';
 @Component({
   selector: 'app-shared',
@@ -18,7 +19,7 @@ export class SharedComponent implements OnInit {
 
   showSpinner = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private notification: NotificationService) {
     this.isInline = true;
 
     this.items = [
@@ -103,7 +104,11 @@ export class SharedComponent implements OnInit {
     this.showSpinner = !this.showSpinner;
   }
 
-  onSuccess(): void {}
+  onSuccess(): void {
+    this.notification.success('All good!')
+  }
 
-  onError(): void {}
+  onError(): void {
+    this.notification.error('Everything is Wr0ng!')
+  }
 }
