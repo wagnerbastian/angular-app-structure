@@ -1,4 +1,5 @@
 import { Employee, Recruiter } from "./roles";
+export { Employee, Recruiter } from "./roles";
 
 
 export interface User {
