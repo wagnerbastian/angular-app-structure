@@ -1,65 +1,68 @@
-import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component, OnInit, forwardRef, Input, Output, EventEmitter } from '@angular/core';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+
 type PasswordType = 'password' | 'text';
 
 @Component({
-  selector: 'app-password',
-  templateUrl: './password.component.html',
-  styleUrls: ['./password.component.scss'],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => PasswordComponent),
-      multi: true
-    }
-  ]
+    selector: 'app-password',
+    templateUrl: './password.component.html',
+    styleUrls: ['./password.component.scss'],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => PasswordComponent),
+            multi: true
+        }
+    ]
 })
 export class PasswordComponent implements OnInit, ControlValueAccessor {
 
-  @Input() placeholder: string = '';
-  @Output() changed = new EventEmitter<string>();
+    @Input() placeholder: string;
 
-  value!: string;
-  isDisabled!: boolean;
-  passwordType!: PasswordType;
+    @Output() changed = new EventEmitter<string>();
 
-  constructor() {
-    this.passwordType = 'password';
-  }
+    value: string;
+    isDisabled: boolean;
+    passwordType: PasswordType;
 
-  ngOnInit(): void {
-  }
+    constructor() {
+        this.passwordType = 'password';
+    }
 
-  private propagateChange: any = () => { };
-  private propagateTouched: any = () => { };
+    ngOnInit(): void {
+    }
 
-  writeValue(value: string): void {
-    this.value = value;
-  }
-  registerOnChange(fn: any): void {
-    this.propagateChange = fn;
-  }
-  registerOnTouched(fn: any): void {
-    this.propagateTouched = fn;
-  }
+    private propagateChange: any = () => { };
+    private propagateTouched: any = () => { };
 
-  setDisabledState(isDisabled: boolean): void {
-    this.isDisabled = isDisabled;
-  }
+    writeValue(value: string): void {
+        this.value = value;
+    }
 
-  onKeyup(event: any): void {
-    const value = event.target.value;
-    this.value = value;
-    this.propagateChange(value);
-    this.changed.emit(value);
-  }
+    registerOnChange(fn: any): void {
+        this.propagateChange = fn;
+    }
 
-  onBlur(): void {
-    this.propagateTouched();
-  }
+    registerOnTouched(fn: any): void {
+        this.propagateTouched = fn;
+    }
 
-  togglePassword(): void {
-    this.passwordType = this.passwordType === 'password' ? 'text' : 'password';
-  }
+    setDisabledState(isDisabled: boolean): void {
+        this.isDisabled = isDisabled;
+    }
+
+    onKeyup(value: string): void {
+        this.value = value;
+        this.propagateChange(value);
+        this.changed.emit(value);
+    }
+
+    onBlur(): void {
+        this.propagateTouched();
+    }
+
+    togglePassword(): void {
+        this.passwordType = this.passwordType === 'password' ? 'text' : 'password';
+    }
 
 }

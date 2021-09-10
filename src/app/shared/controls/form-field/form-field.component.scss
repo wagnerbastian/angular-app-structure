@@ -1,5 +1,4 @@
-@import "styles/colors";
-
+@import 'styles/colors';
 
 .form-field {
     padding-bottom: 8px;
@@ -40,7 +39,8 @@
         }
 
         >.form-field__control {
-            width: 70%;
+           width: 70%;
         }
     }
+
 }

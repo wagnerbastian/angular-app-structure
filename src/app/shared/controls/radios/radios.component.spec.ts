@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RadiosComponent } from './radios.component';
 
@@ -6,12 +6,12 @@ describe('RadiosComponent', () => {
   let component: RadiosComponent;
   let fixture: ComponentFixture<RadiosComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
       declarations: [ RadiosComponent ]
     })
     .compileComponents();
-  });
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(RadiosComponent);

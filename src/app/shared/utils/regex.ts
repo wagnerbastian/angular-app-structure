@@ -13,7 +13,6 @@ export const regex = {
 export const regexErrors = {
     email: 'Email is incorrect',
     password: 'Password must contain an upper case letter, a lower case letter and a number',
-    passwordRepeat: 'Passwords don not match',
     latin: 'Latin letters only',
     numbers: 'Digits only',
     latinAndNumbers: 'Latin letters and digits only',

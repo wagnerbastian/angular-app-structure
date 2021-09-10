@@ -1,15 +1,16 @@
-import { AngularFirestore, DocumentChangeAction } from "@angular/fire/compat/firestore";
 import { Injectable } from '@angular/core';
+import { Effect, Actions, ofType } from '@ngrx/effects';
 
-import { Effect, Actions, ofType } from "@ngrx/effects";
+import { AngularFirestore, DocumentChangeAction } from '@angular/fire/compat/firestore';
 
 import { Observable, of, zip } from 'rxjs';
 import { map, switchMap, catchError, take } from 'rxjs/operators';
 
-import { Dictionaries, Dictionary, Item, ControlItem } from "./dictionaries.models";
+import { Dictionaries, Dictionary, Item, ControlItem } from './dictionaries.models';
 
 import * as fromActions from './dictionaries.actions';
 import * as jsonCountries from '@src/assets/countries.json';
+
 
 type Action = fromActions.All;
 
@@ -30,11 +31,15 @@ const itemToControlItem = (x: Item): ControlItem => ({
 const addDictionary = (items: Item[]): Dictionary => ({
     items,
     controlItems: [...items].map(x => itemToControlItem(x))
-})
+});
 
 @Injectable()
 export class DictionariesEffects {
-    constructor(private actions: Actions, private afs: AngularFirestore) {}
+
+    constructor(
+        private actions: Actions,
+        private afs: AngularFirestore
+    ) { }
 
     @Effect()
     read: Observable<Action> = this.actions.pipe(
@@ -64,7 +69,8 @@ export class DictionariesEffects {
                         src: null,
                         cssClass: 'fflag fflag-' + country.code.toUpperCase()
                     }
-                })))
+                })
+                ))
             ).pipe(
                 map(([roles, specializations, qualifications, skills, countries]) => {
 
@@ -79,7 +85,7 @@ export class DictionariesEffects {
                     return new fromActions.ReadSuccess(dictionaries);
                 }),
                 catchError(err => of(new fromActions.ReadError(err.message)))
-            )
+            );
         })
     );
 }

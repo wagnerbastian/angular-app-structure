@@ -6,9 +6,7 @@ import { EmailConfirmComponent } from './email-confirm.component';
 
 
 @NgModule({
-  declarations: [
-    EmailConfirmComponent
-  ],
+  declarations: [EmailConfirmComponent],
   imports: [
     CommonModule,
     EmailConfirmRoutingModule

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+//import { firestore } from 'firebase/compat/app';
 
 import { Observable, from, of } from 'rxjs';
 import { map, switchMap, catchError, take, tap, withLatestFrom } from 'rxjs/operators';
@@ -26,8 +27,7 @@ export class UserEffects {
         private afs: AngularFirestore,
         private router: Router,
         private notification: NotificationService
-    ) {
-    }
+    ) { }
 
     @Effect()
     init: Observable<Action> = this.actions.pipe(
@@ -101,6 +101,39 @@ export class UserEffects {
             from(this.afAuth.signOut()).pipe(
                 map(() => new fromActions.SignOutSuccess()),
                 catchError(err => of(new fromActions.SignOutError(err.message)))
+            )
+        )
+    );
+
+    @Effect()
+    create: Observable<Action> = this.actions.pipe(
+        ofType(fromActions.Types.CREATE),
+        map((action: fromActions.Create) => action.user),
+        withLatestFrom(this.afAuth.authState.pipe(take(1))),
+        map(([user, state]) => ({
+            ...user,
+            uid: state.uid,
+            email: state.email,
+            created: new Date().toISOString()
+        })),
+        switchMap((user: User) =>
+            from(this.afs.collection('users').doc(user.uid).set(user)).pipe(
+                tap(() => this.router.navigate(['/profile', user.uid])),
+                map(() => new fromActions.CreateSuccess(user)),
+                catchError(err => of(new fromActions.CreateError(err.message)))
+            )
+        )
+    );
+
+    @Effect()
+    update: Observable<Action> = this.actions.pipe(
+        ofType(fromActions.Types.UPDATE),
+        map((action: fromActions.Update) => action.user),
+        switchMap(user =>
+            from(this.afs.collection('users').doc(user.uid).set(user)).pipe(
+                tap(() => this.router.navigate(['/profile', user.uid])),
+                map(() => new fromActions.UpdateSuccess(user)),
+                catchError(err => of(new fromActions.UpdateError(err.message)))
             )
         )
     );

@@ -5,14 +5,12 @@ import { RadiosComponent } from './radios.component';
 
 
 @NgModule({
-  declarations: [
-    RadiosComponent
-  ],
-  imports: [
-    CommonModule
-  ],
-  exports: [
-    RadiosComponent
-  ]
+    declarations: [RadiosComponent],
+    imports: [
+        CommonModule
+    ],
+    exports: [
+        RadiosComponent
+    ]
 })
 export class RadiosModule { }
