@@ -36,7 +36,7 @@ const APP_DATE_FORMATS: MatDateFormats = {
 
 
 // services
-import { NotificationModule } from './services'
+import { NotificationModule } from './services';
 
 @NgModule({
   declarations: [
