@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-//import { firestore } from 'firebase/compat/app';
 
 import { Observable, from, of } from 'rxjs';
 import { map, switchMap, catchError, take, tap, withLatestFrom } from 'rxjs/operators';
@@ -79,11 +78,9 @@ export class UserEffects {
             from(this.afAuth.createUserWithEmailAndPassword(credentials.email, credentials.password)).pipe(
                 tap(() => {
                     this.afAuth.currentUser.then(user => {
-                        user.sendEmailVerification(
-                            environment.firebase.actionCodeSettings
-                        );
+                        user.sendEmailVerification(environment.firebase.actionCodeSettings)
                         this.router.navigate(['/auth/email-confirm']);
-                    })
+                    });                    
                 }),
                 map((signUpState) => new fromActions.SignUpEmailSuccess(signUpState.user.uid)),
                 catchError(err => {
